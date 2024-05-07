@@ -7,97 +7,10 @@ import { useSelector } from "react-redux";
 import style from "./TaskList.module.css";
 import { setTask } from "../store/task-redux";
 import { useDispatch } from "react-redux";
-// let DUMMY_DATA = [
-//   {
-//     title: "React Project",
-//     description: "Create a new project using React",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Angular Project",
-//     description: "Create a new project using Angular",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Vue Project",
-//     description: "Create a new project using Vue",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Svelte Project",
-//     description: "Create a new project using Svelte",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Ember Project",
-//     description: "Create a new project using Ember",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Backbone Project",
-//     description: "Create a new project using Backbone",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Meteor Project",
-//     description: "Create a new project using Meteor",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Aurelia Project",
-//     description: "Create a new project using Aurelia",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Polymer Project",
-//     description: "Create a new project using Polymer",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Knockout Project",
-//     description: "Create a new project using Knockout",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Mithril Project",
-//     description: "Create a new project using Mithril",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Preact Project",
-//     description: "Create a new project using Preact",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Inferno Project",
-//     description: "Create a new project using Inferno",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Elm Project",
-//     description: "Create a new project using Elm",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Reason Project",
-//     description: "Create a new project using Reason",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Sapper Project",
-//     description: "Create a new project using Sapper",
-//     date: "8446590015",
-//   },
-//   {
-//     title: "Nuxt Project",
-//     description: "Create a new project using Nuxt",
-//     date: "8446590015",
-//   },
-// ];
 const TaskList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.task.tasks);
-  const completedTask = tasks.filter((item) => item.completed == true);
+  const completedTask = tasks.filter((item) => item.completed === true);
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow1, setModalShow1] = React.useState(false);
   const [indexSet, setIndexSet] = React.useState(0);
@@ -136,7 +49,15 @@ const TaskList = () => {
         />
       )}
       <div className={style.section}>
-        <Button className={style.button} onClick={() => handleAddTask()}>
+        <Button
+          onClick={() => handleAddTask()}
+          className={style.button}
+          style={{
+            backgroundColor: "#09203F",
+            border: "4px solid #0956a9",
+            borderRadius: "25px",
+          }}
+        >
           Add Task +
         </Button>
         {tasks.map((task, index) => {
@@ -146,7 +67,7 @@ const TaskList = () => {
           const timestamp = new Date(dateTimeString).getTime();
 
           console.log(timestamp);
-          if (task.completed) return;
+          if (task.completed) return null;
           return (
             <div
               className={style.container}
@@ -157,66 +78,84 @@ const TaskList = () => {
                 style={{
                   position: "relative",
                   top: "10px",
-                  right: "10px",
+                  left: "20rem",
                 }}
               >
-                <Button onClick={() => deleteConfirmhandler(index)}>
+                <Button
+                  onClick={() => deleteConfirmhandler(index)}
+                  style={{
+                    backgroundColor: "#09203F",
+                    border: "4px solid #0956a9",
+                    borderRadius: "25px",
+                    boxShadow: "0px 0px 10px 5px",
+                  }}
+                >
                   <MdDelete />
                 </Button>
               </div>
-              <h1 className={style.h1}>{task.title}</h1>
+              <h1 className={style.h1} style={{ marginTop: "-1.5rem" }}>
+                {task.title}
+              </h1>
               <p className={style.p}>{task.description.slice(0, 20)}</p>
-              {task?.completed ? (
-                <p className={style.p}>Completed</p>
-              ) : date < timestamp ? (
-                <p className={style.p}>Pending</p>
+              {date < timestamp ? (
+                <p
+                  className={style.p}
+                  style={{ fontSize: "1.2rem", color: "yellow" }}
+                >
+                  Pending
+                </p>
               ) : (
-                <p className={style.p}>Late</p>
+                <p
+                  className={style.p}
+                  style={{ color: "red", fontSize: "1.2rem" }}
+                >
+                  Late
+                </p>
               )}
             </div>
           );
         })}
-        {/* </div> */}
-
         <div
           style={{
             color: "white",
             textAlign: "center",
+            fontSize: "2rem",
+            fontWeight: "1200",
           }}
         >
           Completed Tasks
           {completedTask.map((task, index) => {
-            const currtaskdate = task.date;
-            const currtasktime = task.time;
-            const dateTimeString = `${currtaskdate} ${currtasktime}`;
-            const timestamp = new Date(dateTimeString).getTime();
-
             return (
-              <div
-                className={style.container}
-                key={index}
-                //   onClick={() => handleOpenTask(index)}
-              >
+              <div className={style.container} key={index}>
                 <div
                   style={{
                     position: "relative",
                     top: "10px",
-                    right: "10px",
+                    left: "10rem",
                   }}
                 >
-                  {/* <Button onClick={() => deleteConfirmhandler(index)}>
-                  <MdDelete />
-                </Button> */}
+                  <Button
+                    onClick={() => deleteConfirmhandler(index)}
+                    style={{
+                      backgroundColor: "#09203F",
+                      border: "4px solid #0956a9",
+                      borderRadius: "25px",
+                      boxShadow: "0px 0px 10px 5px",
+                    }}
+                  >
+                    <MdDelete />
+                  </Button>
                 </div>
-                <h1 className={style.h1}>{task.title}</h1>
+                <h1 className={style.h1} style={{ marginTop: "-1.5rem" }}>
+                  {task.title}
+                </h1>
                 <p className={style.p}>{task.description.slice(0, 20)}</p>
-                {task?.completed ? (
-                  <p className={style.p}>Completed</p>
-                ) : date < timestamp ? (
-                  <p className={style.p}>Pending</p>
-                ) : (
-                  <p className={style.p}>Late</p>
-                )}
+                <p
+                  className={style.p}
+                  style={{ color: "#26ff26", fontSize: "1.2rem" }}
+                >
+                  Completed
+                </p>
               </div>
             );
           })}

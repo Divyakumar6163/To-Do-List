@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { setTask } from "../store/task-redux";
 import { useDispatch } from "react-redux";
-import { styles } from "./InputModal.module.css";
+import style from "./InputModal.module.css";
 function InputModal(props) {
   console.log(props.data);
   const [title, setTitle] = useState(props?.data?.title || "");
@@ -33,11 +33,36 @@ function InputModal(props) {
   };
   return (
     <>
-      <Modal show={props.show} onHide={props.onHide}>
-        <Modal.Header closeButton>
+      <Modal
+        show={props.show}
+        onHide={props.onHide}
+        style={{
+          left: "32vw",
+          width: "35vw",
+          borderRadius: "35px",
+          height: "fit-content",
+          top: "13vh",
+          padding: "*-2rem",
+          boxShadow: "white 0px 0px 10px 5px",
+          background: "#011936FF",
+        }}
+      >
+        <Modal.Header
+          style={{
+            backgroundColor: "#011936FF",
+            color: "white",
+            marginTop: "-28px",
+          }}
+        >
           <Modal.Title>{props.edit ? "EDIT" : "ADD"} TASK</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body
+          style={{
+            backgroundColor: "#011936FF",
+            // height: "10rem",
+            color: "white",
+          }}
+        >
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Title</Form.Label>
@@ -46,18 +71,20 @@ function InputModal(props) {
                 placeholder="title"
                 autoFocus
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value.toUpperCase())}
+                className={style.input}
               />
             </Form.Group>
             <Form.Group
-              className="mb-3"
               controlId="exampleForm.ControlTextarea1"
               placeholder="description"
               value={description}
+              // className={style.input}
               onChange={(e) => setDescription(e.target.value)}
             >
               <Form.Label>Description</Form.Label>
               <Form.Control
+                className={style.input}
                 as="textarea"
                 rows={3}
                 value={description}
@@ -69,6 +96,7 @@ function InputModal(props) {
               <Form.Control
                 type="time"
                 value={time}
+                className={style.input}
                 onChange={(e) => setTime(e.target.value)}
               />
 
@@ -76,16 +104,60 @@ function InputModal(props) {
               <Form.Control
                 type="date"
                 value={date}
+                className={style.input}
                 onChange={(e) => setDate(e.target.value)}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
+        <Modal.Footer
+          style={{
+            backgroundColor: "#011936FF",
+            color: "white",
+            marginBottom: "-28px",
+          }}
+        >
+          <Button
+            variant="secondary"
+            onClick={props.onHide}
+            // className={style.button}
+            style={{
+              width: "6rem",
+              border: "4px solid #0956a9",
+              backgroundColor: "#09203F",
+              color: "white",
+              padding: ".7rem .7rem",
+              textAlign: "center",
+              textDecoration: "none",
+              display: " inline-block",
+              fontSize: "1rem",
+              margin: "4px 0rem 0rem 1.8rem",
+              cursor: "pointer",
+              borderRadius: " 25px",
+              boxShadow: "0px 0px 10px 5px",
+            }}
+          >
             Close
           </Button>
-          <Button variant="primary" onClick={saveTask}>
+          <Button
+            variant="primary"
+            onClick={saveTask}
+            // className={style.button}
+            style={{
+              backgroundColor: "#09203F",
+              border: "4px solid #0956a9",
+              color: "white",
+              padding: ".7rem .7rem",
+              textAlign: "center",
+              textDecoration: "none",
+              display: " inline-block",
+              fontSize: "1rem",
+              margin: "4px 0rem 0rem 1.8rem",
+              cursor: "pointer",
+              borderRadius: " 25px",
+              boxShadow: "0px 0px 10px 5px",
+            }}
+          >
             Save Changes
           </Button>
         </Modal.Footer>
