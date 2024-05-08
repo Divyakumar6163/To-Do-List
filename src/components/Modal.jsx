@@ -7,9 +7,12 @@ import { useDispatch } from "react-redux";
 function MyVerticallyCenteredModal(props) {
   const dispatch = useDispatch();
   const deleteConfirmhandler = () => {
+    props.onHide();
+    console.log(props.show);
     if (window.confirm("Are you sure you want to delete this task?")) {
       dispatch(setTask.deleteTask(props.index));
       props.onHide();
+      console.log(props.show);
     }
   };
   function editHandler() {
@@ -19,6 +22,7 @@ function MyVerticallyCenteredModal(props) {
     props.modal();
   }
   const completedHandler = () => {
+    props.onHide();
     dispatch(
       setTask.editTask({
         index: props.index,
@@ -26,6 +30,10 @@ function MyVerticallyCenteredModal(props) {
       })
     );
   };
+  function handleClose() {
+    props.onHide();
+    props.setIsCompleted(false);
+  }
   return (
     <Modal
       {...props}
@@ -94,49 +102,53 @@ function MyVerticallyCenteredModal(props) {
         >
           <MdDelete />
         </Button>
+        {!props.isCompleted && (
+          <Button
+            onClick={editHandler}
+            style={{
+              width: "3.5rem",
+              height: "3.5rem",
+              backgroundColor: "#09203F",
+              border: "4px solid #0956a9",
+              color: "white",
+              padding: ".7rem .7rem",
+              textAlign: "center",
+              textDecoration: "none",
+              display: " inline-block",
+              fontSize: "1rem",
+              margin: "4px 0rem 0rem 1.8rem",
+              cursor: "pointer",
+              borderRadius: " 25px",
+              boxShadow: "0px 0px 10px 5px",
+            }}
+          >
+            <FaPencilAlt />
+          </Button>
+        )}
+        {!props.isCompleted && (
+          <Button
+            onClick={completedHandler}
+            style={{
+              width: "13rem",
+              backgroundColor: "#09203F",
+              border: "4px solid #0956a9",
+              color: "white",
+              padding: ".7rem .7rem",
+              textAlign: "center",
+              textDecoration: "none",
+              display: " inline-block",
+              fontSize: "1rem",
+              margin: "4px 0rem 0rem 1.8rem",
+              cursor: "pointer",
+              borderRadius: " 25px",
+              boxShadow: "0px 0px 10px 5px",
+            }}
+          >
+            Mark as Completed
+          </Button>
+        )}
         <Button
-          onClick={editHandler}
-          style={{
-            width: "3.5rem",
-            height: "3.5rem",
-            backgroundColor: "#09203F",
-            border: "4px solid #0956a9",
-            color: "white",
-            padding: ".7rem .7rem",
-            textAlign: "center",
-            textDecoration: "none",
-            display: " inline-block",
-            fontSize: "1rem",
-            margin: "4px 0rem 0rem 1.8rem",
-            cursor: "pointer",
-            borderRadius: " 25px",
-            boxShadow: "0px 0px 10px 5px",
-          }}
-        >
-          <FaPencilAlt />
-        </Button>
-        <Button
-          onClick={completedHandler}
-          style={{
-            width: "13rem",
-            backgroundColor: "#09203F",
-            border: "4px solid #0956a9",
-            color: "white",
-            padding: ".7rem .7rem",
-            textAlign: "center",
-            textDecoration: "none",
-            display: " inline-block",
-            fontSize: "1rem",
-            margin: "4px 0rem 0rem 1.8rem",
-            cursor: "pointer",
-            borderRadius: " 25px",
-            boxShadow: "0px 0px 10px 5px",
-          }}
-        >
-          Mark as Completed
-        </Button>
-        <Button
-          onClick={props.onHide}
+          onClick={handleClose}
           style={{
             backgroundColor: "#09203F",
             border: "4px solid #0956a9",
